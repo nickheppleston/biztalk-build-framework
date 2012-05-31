@@ -2,7 +2,6 @@
 
   <!-- Import MSBuild Extension Pack Tasks -->
   <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks"/>
-
   
   <!-- Import Build Script Tasks-->
   <Import Project=".\biztalk-build-framework-general.properties" />
@@ -11,8 +10,6 @@
   <Import Project=".\biztalk-build-framework-cleanup.proj" />
   <Import Project=".\biztalk-build-framework-deploy.proj" />
   <Import Project=".\biztalk-build-framework-export.proj" />
-
-  <!-- **This next line needs to be included on the command-line** -->
   <Import Project="$(SolutionBuildPath)\$(CustomBuildPropsFile)" />
   
 
@@ -22,45 +19,5 @@
   <Target Name="Cleanup" DependsOnTargets="Application-Cleanup" />
   <Target Name="Deploy" DependsOnTargets="Application-Deploy" />
   <Target Name="Export" DependsOnTargets="Application-Export" />
-
-
-  <!--
-  <PropertyGroup>
-    <MSBuildTasksPath>$(MSBuildProjectDirectory)\..\MSBuild.ExtensionPack.tasks</MSBuildTasksPath>
-    <MSBuildTasksPath Condition="Exists('$(MSBuildProjectDirectory)\..\..\Common\MSBuild.ExtensionPack.tasks')">$(MSBuildProjectDirectory)\..\..\Common\MSBuild.ExtensionPack.tasks</MSBuildTasksPath>
-  </PropertyGroup>
-
-  <Target Name="Configure">
-    <Message Text="MSBuildTasksPath: $(MSBuildTasksPath)" />
-    <Message Text="MSBuildExtensionsPath: $(MSBuildExtensionsPath)" />
-  </Target>
-    -->
-
-  <!--
-  -->
-
-  <!-- Import Targets -->
-  <!--<Import Project="$(MSBuildTasksPath)"/>-->
-  <!--
-  <Import Project="$(MSBuildTasksPath)\MSBuild.Community.Tasks.Targets" />
-  <Import Project="$(MSBuildTasksPath)\MSBuild.MsmqBuildTasks.Tasks.Targets" />
-  <Import Project="$(MSBuildTasksPath)\Microsoft.Sdc.Common.tasks" />
--->
-
-  <!-- Import MSBuild Projects
-  <Import Project=".\Norgine.Logility-General.properties" />
-  <Import Project=".\Norgine.Logility.properties" />
-  <Import Project=".\Norgine.Logility-Configure.proj" />
-  <Import Project=".\Norgine.Logility-Build.proj" />
-  <Import Project=".\Norgine.Logility-Cleanup.proj" />
-  <Import Project=".\Norgine.Logility-Deploy.proj" />
- -->
-  <!-- Only execute the build step if we are doing a full (i.e. local) build. This allows us to run a deploy only on the build-server. -->
-
-  <!--
-  <Target Name="Build" DependsOnTargets="Application-Build" Condition="$(BuildScope)=='FULL_BUILD'" />
-  <Target Name="Cleanup" DependsOnTargets="Application-Cleanup" />
-  <Target Name="Deploy" DependsOnTargets  ="Application-Deploy" />
-  -->
 
 </Project>
