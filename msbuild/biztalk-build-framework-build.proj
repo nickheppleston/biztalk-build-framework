@@ -1,0 +1,23 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="Application-Build" DependsOnTargets="CleanupAssemblies;CopyAssemblies" />
+
+  <Target Name="BuildSolution">
+		<Message Text="Building solution '$(SolutionPath)'" />
+    <!--<MSBuild Projects="$(SolutionPath)" Properties="//p:Configuration=$(BuildConfiguration) //p:Platform=$(BuildPlatform)" />-->
+    <MSBuild Projects="$(SolutionPath)" />
+	</Target>
+
+  <Target Name="CleanupAssemblies">
+    <RemoveDir Directories="$(AssemblyPath)" />
+    <MakeDir Directories="$(AssemblyPath)" />
+  </Target>
+
+  <Target Name="CopyAssemblies">
+    <Message Text="Copying Assemblies to $(AssemblyPath)" />
+    <Copy SourceFiles="%(BizTalkProject.ProjectDirectory)\bin\$(BuildConfiguration)\%(BizTalkProject.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />
+    <!--<Copy SourceFiles="%(SupportingAssembly.ProjectDirectory)\bin\$(BuildType)\%(SupportingAssembly.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />-->
+    <!--<Copy SourceFiles="%(SupportingTestAssembly.ProjectDirectory)\bin\$(BuildType)\%(SupportingTestAssembly.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />-->
+  </Target>
+  
+</Project>

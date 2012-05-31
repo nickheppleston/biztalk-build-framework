@@ -1,0 +1,44 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="Application-Deploy" DependsOnTargets="CreateBizTalkApplication;DeploySupportingAssemblies;DeployBizTalkAssemblies;ImportBizTalkBindings;StartBizTalkHostInstances;StartBizTalkApplication" />
+    <!--
+  </Target>DeployEnvironmentBizTalkBindings;ImportBizTalkBindings;StartBizTalkHosts;StartBizTalkApplication" />
+    -->
+    
+  <!-- Create BizTalk Application -->
+  <Target Name="CreateBizTalkApplication">
+    <Message Text="Creating BizTalk Application/s $(BizTalkApplicationName)" />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="Create" Applications="$(BizTalkApplicationName)" Force="true" />
+  </Target>
+
+  <!-- Deploy Supporting Assemblies (Helper Classes) -->
+  <Target Name="DeploySupportingAssemblies" Condition="$(DeploySupportingAssemblies) == True">
+    <Message Text="Deploying Supporting Assemblies..." />
+    <Exec Command="BTSTask.exe AddResource /Source:&quot;$(AssemblyPath)\%(SupportingAssembly.AssemblyName).dll&quot; /ApplicationName:$(BizTalkApplicationName) /Type:System.BizTalk:Assembly /Op:GacOnAdd,GacOnInstall" />
+  </Target>
+
+  <!-- Deploy BizTalk Assemblies -->
+  <Target Name="DeployBizTalkAssemblies" Condition="$(DeployBizTalkAssemblies) == True">
+    <Message Text="Deploying BizTalk Assemblies..." />
+    <Exec Command="BTSTask.exe AddResource /Source:&quot;$(AssemblyPath)\%(BizTalkProject.AssemblyName).dll&quot; /ApplicationName:$(BizTalkApplicationName) /Type:System.BizTalk:BizTalkAssembly /Op:GacOnAdd,GacOnInstall" />
+  </Target>
+
+  <!-- Import BizTalk Bindings -->
+  <Target Name="ImportBizTalkBindings" Condition="$(ImportBizTalkBindings) == True">
+    <Message Text="Deploying BizTalk Assemblies..." />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="ImportBindings" BindingFile="$(BizTalkBindingsFile)" Application="$(BizTalkApplicationName)" />
+  </Target>
+
+  <!-- Start BizTalk Host Instances -->
+  <Target Name="StartBizTalkHostInstances">
+    <Message Text="Starting BizTalk Host Instance '%(BizTalkHostInstance.InstanceName)'." />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkHostInstance TaskAction="Start" HostName="%(BizTalkHostInstance.InstanceName)"/>
+  </Target>
+
+  <!-- Start BizTalk Application -->
+  <Target Name="StartBizTalkApplication">
+    <Message Text="Starting BizTalk Application '$(BizTalkApplicationName)'." />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="StartAll" Applications="$(BizTalkApplicationName)" />
+  </Target>
+
+</Project>

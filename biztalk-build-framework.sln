@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common-build-scripts", "common-build-scripts", "{C27FBF00-CA97-49C6-8A90-5A93E7A7A328}"
+	ProjectSection(SolutionItems) = preProject
+		msbuild\BtsAppBuild-Bootstrap.proj = msbuild\BtsAppBuild-Bootstrap.proj
+		msbuild\BtsAppBuild-Build.proj = msbuild\BtsAppBuild-Build.proj
+		msbuild\BtsAppBuild-Cleanup.proj = msbuild\BtsAppBuild-Cleanup.proj
+		msbuild\BtsAppBuild-Configure.proj = msbuild\BtsAppBuild-Configure.proj
+		msbuild\BtsAppBuild-Deploy.proj = msbuild\BtsAppBuild-Deploy.proj
+		msbuild\BtsAppBuild-Export.proj = msbuild\BtsAppBuild-Export.proj
+		msbuild\BtsAppBuild-General.properties = msbuild\BtsAppBuild-General.properties
+		msbuild\Norgine.Logility BUILD.bat = msbuild\Norgine.Logility BUILD.bat
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

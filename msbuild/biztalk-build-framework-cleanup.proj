@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!--<Target Name="Application-Cleanup" DependsOnTargets="CheckBizTalkApplicationExists;StopBizTalkApplication;StopBizTalkHosts;DeleteBizTalkApplication;" />-->
+  <Target Name="Application-Cleanup" DependsOnTargets="StopBizTalkApplication;StopBizTalkHostInstances;DeleteBizTalkApplication;" />
+
+  <Target Name="StopBizTalkApplication">
+    <Message Text="Stopping BizTalk Application '$(BizTalkApplicationName)'." />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="StopAll" Applications="$(BizTalkApplicationName)" />
+  </Target>
+
+  <Target Name="StopBizTalkHostInstances">
+    <Message Text="Stopping BizTalk Host Instance '%(BizTalkHostInstance.InstanceName)'." />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkHostInstance TaskAction="Stop" HostName="%(BizTalkHostInstance.InstanceName)"/>
+  </Target>
+
+  <Target Name="DeleteBizTalkApplication">
+		<Message Text="Deleting BizTalk Application/s $(BizTalkApplicationName)" />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="Delete" Applications="$(BizTalkApplicationName)" Force="true" />
+	</Target>
+
+</Project>

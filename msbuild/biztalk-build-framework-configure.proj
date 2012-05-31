@@ -1,0 +1,17 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<Target Name="Application-Configure" DependsOnTargets="CleanBuildEnvironment;" />
+	
+	<Target Name="CleanBuildEnvironment">
+		<Message Text="Cleaning build environment..." />
+	</Target>
+
+  <Target Name="ConfigureBizTalkBindingFile" Condition="$(BUILD_TYPE) == 'FULL'">
+    <Copy SourceFiles="$(BizTalkBindingsFileTemplate)" DestinationFiles="$(BizTalkBindingsFile)" />
+
+    <!-- Replace $BUILD_NUMBER$ with Build Number in Binding File -->
+    <FileUpdate Files="$(BizTalkBindingsFile)" Regex="\$BUILD_NUMBER\$"
+		  ReplacementText ="$(BUILD_NUMBER)" />
+  </Target>
+	
+</Project>
