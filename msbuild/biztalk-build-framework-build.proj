@@ -14,10 +14,9 @@
   </Target>
 
   <Target Name="CopyAssemblies">
-    <Message Text="Copying Assemblies to $(AssemblyPath)" />
-    <Copy SourceFiles="%(BizTalkProject.ProjectDirectory)\bin\$(BuildConfiguration)\%(BizTalkProject.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />
-    <!--<Copy SourceFiles="%(SupportingAssembly.ProjectDirectory)\bin\$(BuildType)\%(SupportingAssembly.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />-->
-    <!--<Copy SourceFiles="%(SupportingTestAssembly.ProjectDirectory)\bin\$(BuildType)\%(SupportingTestAssembly.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" />-->
+    <Message Text="Copying Solution Assemblies to $(AssemblyPath)" />
+    <Copy SourceFiles="%(BizTalkProject.ProjectDirectory)\bin\$(BuildConfiguration)\%(BizTalkProject.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" Condition="$(DeployBizTalkAssemblies) == 'True'" />
+    <Copy SourceFiles="%(SupportingAssembly.ProjectDirectory)\bin\$(BuildType)\%(SupportingAssembly.AssemblyName).dll" DestinationFolder="$(AssemblyPath)" Condition="$(DeploySupportingAssemblies) == 'True'" />
   </Target>
   
 </Project>
