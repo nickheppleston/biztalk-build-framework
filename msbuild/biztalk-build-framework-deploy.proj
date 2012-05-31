@@ -1,11 +1,17 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="Application-Deploy" DependsOnTargets="CreateBizTalkApplication;DeploySupportingAssemblies;DeployBizTalkAssemblies;ImportBizTalkBindings;StartBizTalkHostInstances;StartBizTalkApplication" />
+  <Target Name="Application-Deploy" DependsOnTargets="CreateBizTalkApplication;AddBizTalkApplicationReferences;DeploySupportingAssemblies;DeployBizTalkAssemblies;ImportBizTalkBindings;StartBizTalkHostInstances;StartBizTalkApplication" />
     
   <!-- Create BizTalk Application -->
   <Target Name="CreateBizTalkApplication">
     <Message Text="Creating BizTalk Application/s $(BizTalkApplicationName)" />
     <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="Create" Applications="$(BizTalkApplicationName)" Force="true" />
+  </Target>
+
+  <!-- Add BizTalk Application References -->
+  <Target Name="AddBizTalkApplicationReferences" >
+    <Message Text="Adding BizTalk Application References to $(BizTalkApplicationName)" />
+    <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="AddReference" Application="$(BizTalkApplicationName)" References="%(BizTalkApplicationReference.ApplicationReference)" Condition="$(AddBizTalkApplicationReference) == 'True'"/>
   </Target>
 
   <!-- Deploy Supporting Assemblies (Helper Classes) -->
