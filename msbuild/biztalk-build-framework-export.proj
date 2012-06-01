@@ -1,9 +1,19 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="Application-Export" DependsOnTargets="ExportToMsi" />
+  <Target Name="Application-Export" DependsOnTargets="CleanupMsiDirectories;ExportToMsi" />
+
+  <Target Name="CleanupMsiDirectories">
+    <RemoveDir Directories="$(MsiPath)" />
+    <MakeDir Directories="$(MsiPath)" />
+  </Target>
 
   <Target Name="ExportToMsi">
 
+    <!--
+    
+    The ExtensionPack functionality doesn't appear to be working at 
+    the moment - needs a bit more thought...
+    
     <GetAssemblyIdentity AssemblyFiles="$(AssemblyPath)\%(BizTalkProject.AssemblyName).dll">
       <Output TaskParameter="Assemblies" ItemName="MyAssemblyIdentities" />
     </GetAssemblyIdentity>
@@ -14,6 +24,9 @@
     </ItemGroup>
 
     <MSBuild.ExtensionPack.BizTalk.BizTalkApplication TaskAction="ExportToMsi" Application="$(BizTalkApplicationName)" Resources="@Resources" MsiPath="C:\Export.msi" IncludeGlobalPartyBinding="true"/>
+    -->
+    
+    <Exec Command="BTSTask.exe ExportApp /ApplicationName:$(BizTalkApplicationName) /Package:&quot;$(MsiPath)\$(BizTalkApplicationName).msi&quot; /ResourceSpec:&quot;$(BuildPath)\ApplicationExport-ResourceSpec.$(BizTalkApplicationName).xml&quot;" />
 
   </Target>
 
